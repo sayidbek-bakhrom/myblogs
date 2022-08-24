@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if messages %}
+        {% for msg in messages %}
+         <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+                <p>{{ msg }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for post in posts %}
+        <div class="card">
+            <p class="card-header">{{ post.created_at }}</p>
+          <div class="card-body">
+           <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.subtitle }}</p>
+            <a href="{% url 'post-detail' post.slug %}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+        <br>
+    {% endfor %}
+
+
+
+
+{% endblock %}
