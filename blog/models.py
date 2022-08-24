@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from ckeditor.fields import RichTextField
 
 
 class Post(models.Model):
@@ -8,9 +9,11 @@ class Post(models.Model):
     subtitle = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to='images/', blank=True)
-    content = models.TextField()
+    content = RichTextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -19,4 +22,6 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
 
