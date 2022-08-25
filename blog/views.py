@@ -14,7 +14,7 @@ def home(request):
     nums = 'a' * posts.paginator.num_pages
     context = {
         'posts': posts,
-        # 'nums': nums,
+        'nums': nums,
     }
 
     return render(request, 'blog/index.html', context)
