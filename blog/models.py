@@ -27,9 +27,12 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    body = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=140)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '%s - %s' % (self.post.title, self.name)
+        return self.comment[:30]
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs=self.post.slug)

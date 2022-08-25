@@ -34,23 +34,22 @@
 
         </p>
         <hr>
-        <h3>Comments</h3>
+{#           <h3>Comments</h3>#}
+{#            <div class="card-footer">#}
+{#    {% for comment in post.comments.all %}#}
+{#          <ul class="list-group">#}
+{#                <li class="list-group-item list-group-item-light">#}
+{#                    {{ comment.date_added|timesince }} ago<br>#}
+{#          <img src="{{ comment.author.profile.image.url }}" alt="" width="30px">#}
+{#                    <b>{{ comment.author }}: </b> {{ comment }}#}
+{##}
+{#                </li>#}
+{#        </ul>#}
+{#    {% endfor %}#}
+{#    </div>#}
         <br>
-        {% if not post.comments.all %}
-            <p>No comments yet</p>
-         {% else %}
-            {% for comment in post.comments.all %}
+        <br>
 
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-light">
-                        {{ comment.date_added|timesince }} ago <br>
-                        <b>{{ comment.name }}:</b> {{ comment.body }}
-
-                    </li>
-                </ul>
-            {% endfor %}
-            <br><br>
-         {% endif %}
         {% endif %}
 
 

@@ -4,11 +4,19 @@ from .forms import PostForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+# Pagination imports
+from django.core.paginator import Paginator
+
 
 def home(request):
-
-    posts = Post.objects.all()
-    context = {'posts': posts}
+    p = Paginator(Post.objects.all(), 10)
+    page = request.GET.get('page')
+    posts = p.get_page(page)
+    nums = 'a' * posts.paginator.num_pages
+    context = {
+        'posts': posts,
+        'nums': nums,
+    }
 
     return render(request, 'blog/index.html', context)
 
@@ -113,16 +121,19 @@ def admin_page(request):
         return redirect('home')
 
 
-# def delete_post_admin(request, slug):
-#     if request.user.is_superuser:
-#         post = get_object_or_404(Post, slug=slug)
-#         post.delete()
-#         messages.success(request, 'Successfully deleted')
-#         return redirect('home')
-
 def user_posts(request):
     if request.user.is_authenticated:
         posts = Post.objects.filter(author=request.user).order_by('updated_at')
         return render(request, 'blog/user_posts.html', {'posts': posts})
     else:
         return render(request, 'blog/user_posts.html')
+
+
+# def add_comment(request, pk):
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = CommentForm()
+#     return render(request, 'blog/add_comments.html', {'form': form})
