@@ -4,14 +4,12 @@ from .forms import PostForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
-# Pagination imports
-from django.core.paginator import Paginator
-
 
 def home(request):
     # p = Paginator(Post.objects.all(), 10)
     # page = request.GET.get('page')
     posts = Post.objects.all().order_by('updated_at')
+
     # posts = p.get_page(page)
     # nums = 'a' * posts.paginator.num_pages
     context = {
