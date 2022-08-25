@@ -1,21 +1,20 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
-   {% if messages %}
-        {% for msg in messages %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ msg }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
+    <main class="form-signin w-100 m-auto">
+  <form method="post">
+      {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
-    <h2>Sign Up</h2>
-    <br><br>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success">Submit</button>
-    </form>
+    <div class="form-floating">
+        {{ form|crispy }}
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+    <p class="mt-5 mb-3 text-muted">Already have an account? <a href="{% url 'login-user' %}">Login</a></p>
+
+  </form>
+</main>
+
 {% endblock %}

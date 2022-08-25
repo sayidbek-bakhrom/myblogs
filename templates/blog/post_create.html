@@ -4,18 +4,25 @@
 
 {% block content %}
     {% if submitted %}
+
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <p>Added successfully</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% else %}
+    {% if user.is_authenticated %}
     <h2>Add Post</h2>
     <br><br>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         {{ form.media }}
+        <br>
         <button class="btn btn-success">Submit</button>
     </form>
+     {% else %}
+        <a href="{% url 'login-user' %}">Login</a> to create.
+     {% endif %}
+
     {% endif %}
 {% endblock %}

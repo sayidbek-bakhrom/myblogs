@@ -5,22 +5,53 @@
         <h2>Posts have been deleted by admins!</h2>
     {% else %}
     <h2>{{ post.title }}</h2>
-    <p>{{ post.subtitle }}</p>
+        <p>
+            By <b>{{ post.author.first_name }} {{ post.author.last_name }}</b> <br>
+                <small>last updated at {{ post.updated_at }}</small>
+        </p>
+    <p><i>{{ post.subtitle }}</i></p>
     {% if post.image %}
             <center>
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" height="500">
             </center>
 
     {% endif %}
+        
     <p>{{ post.content|safe }}</p>
-
     <br>
-    {% if user.is_authenticated %}
-        {% if request.user == post.author %}
+        <a href="{% url 'post-detail' post.slug %}">Copy the link of this post</a>
+        <br> <br>
+        {% if user.is_authenticated %}
+        {% if request.user == post.author or request.user.is_superuser %}
             <a href="{% url 'post-update' post.slug %}" class="btn btn-success">Update</a>
             <a href="{% url 'delete-post' post.slug %}" class="btn btn-danger">Delete</a>
+
         {% endif %}
     {% endif %}
+        <hr>
+        <p>  <img class="rounded-circle" src="{{ post.author.profile.image.url }}" alt="" width="30px">
+            {{ post.author.first_name }} {{ post.author.last_name }}
 
-    {% endif %}
+        </p>
+        <hr>
+        <h3>Comments</h3>
+        <br>
+        {% if not post.comments.all %}
+            <p>No comments yet</p>
+         {% else %}
+            {% for comment in post.comments.all %}
+
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">
+                        {{ comment.date_added|timesince }} ago <br>
+                        <b>{{ comment.name }}:</b> {{ comment.body }}
+
+                    </li>
+                </ul>
+            {% endfor %}
+            <br><br>
+         {% endif %}
+        {% endif %}
+
+
 {% endblock %}

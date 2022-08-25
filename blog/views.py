@@ -6,9 +6,17 @@ from django.contrib import messages
 
 
 def home(request):
+
     posts = Post.objects.all()
     context = {'posts': posts}
+
     return render(request, 'blog/index.html', context)
+
+
+def all_posts(request):
+    posts = Post.objects.all().order_by('title')
+    context = {'posts': posts}
+    return render(request, 'blog/all_posts.html', context)
 
 
 def post_create(request):
@@ -57,10 +65,7 @@ def post_update(request, slug):
 
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if request.user.is_superuser:
-        messages.success(request, 'Successfully deleted.')
-        post.delete()
-    if request.user == post.author:
+    if request.user == post.author or request.user.is_superuser:
         post.delete()
         messages.success(request, 'Successfully deleted.')
     else:
@@ -97,6 +102,7 @@ def admin_page(request):
             posts_list.update(deleted=False)
             for x in id_list:
                 Post.objects.filter(pk=int(x)).update(deleted=True)
+
             messages.success(request, 'Have been deleted')
             return redirect('admin-page')
         else:
@@ -105,3 +111,18 @@ def admin_page(request):
     else:
         messages.warning(request, 'You are not authorized to view this page')
         return redirect('home')
+
+
+# def delete_post_admin(request, slug):
+#     if request.user.is_superuser:
+#         post = get_object_or_404(Post, slug=slug)
+#         post.delete()
+#         messages.success(request, 'Successfully deleted')
+#         return redirect('home')
+
+def user_posts(request):
+    if request.user.is_authenticated:
+        posts = Post.objects.filter(author=request.user).order_by('updated_at')
+        return render(request, 'blog/user_posts.html', {'posts': posts})
+    else:
+        return render(request, 'blog/user_posts.html')

@@ -12,11 +12,14 @@
     {% for post in posts %}
         {% if not post.deleted %}
         <div class="card">
-            <p class="card-header">{{ post.created_at|date:'F d, Y' }}</p>
+            <p class="card-header">{{ post.created_at|date:'F d, Y' }},
+                <i>{{ post.author.first_name }}</i>
+                <img align="right" src="{{ post.author.profile.image.url }}" alt="" width="30px">
+            </p>
           <div class="card-body">
            <h5 class="card-title">{{ post.title|slice:'100' }}</h5>
             <p class="card-text">{{ post.subtitle }}</p>
-            <a href="{% url 'post-detail' post.slug %}" class="btn btn-primary">View</a>
+            <a href="{% url 'post-detail' post.slug %}" class="btn btn-secondary">View</a>
           </div>
         </div>
         <br>

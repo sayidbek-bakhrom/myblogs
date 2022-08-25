@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'ckeditor',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,6 +77,7 @@ TEMPLATES = [
     },
 ]
 
+# AUTH_USER_MODEL = 'users.Account'
 WSGI_APPLICATION = 'myblogs.wsgi.application'
 
 
@@ -136,5 +139,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+# LOGIN_REDIRECT_URL = 'home'
+# LOGOUT_REDIRECT_URL = 'home'

@@ -11,9 +11,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Blog - {{ title }}</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Blog</title>
     {% endif %}
 </head>
 <body>
@@ -29,10 +29,19 @@
             <li class="nav-item">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
             </li>
+          <li class="nav-item">
+              <a class="nav-item nav-link" href="{% url 'all-posts' %}">All Posts</a>
+            </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
              <a class="nav-item nav-link" href="{% url 'logout-user' %}">Logout</a>
                 </li>
+         <li class="nav-item">
+              <a class="nav-item nav-link" href="{% url 'user-posts' %}">My Posts</a>
+            </li>
+           <li class="nav-item">
+              <a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>
+            </li>
           {% else %}
             <li class="nav-item">
                 <a class="nav-item nav-link" href="{% url 'login-user' %}">Login</a>
@@ -45,6 +54,11 @@
               <li class="nav-item">
           <a class="nav-item nav-link" href="{% url 'post-create' %}">New</a>
                 </li>
+
+
+
+
+
       {% if request.user.is_superuser %}
           <li class="nav-item">
                 <a class="nav-item nav-link" href="{% url 'admin-page' %}">Admin</a>
@@ -55,7 +69,7 @@
 
                      <form class="d-flex" role="search" method="post" action="{% url 'search-post' %}">
               {% csrf_token %}
-        <input class="form-control me-2" name="searched" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control me-2" name="searched" type="search" placeholder="Search Content" aria-label="Search">
         <button class="btn btn-outline-primary" type="submit">Search</button>
       </form>
             </div>
@@ -71,12 +85,16 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
+            <h3>Credits</h3>
+              <p class='text-muted'>I would like to thank following guys.</p>
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
+                <li class="list-group-item list-group-item-light">
+                    John Elder from <a href="https://codemy.com">Codemy.com</a>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    Corey Schafer's <a href="https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g">YouTube</a> Channel
+                </li>
+                <li class="list-group-item list-group-item-light">I followed along their awesome tutorials to create this project!</li>
                 <li class="list-group-item list-group-item-light">etc</li>
               </ul>
           </div>

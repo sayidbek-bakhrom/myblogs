@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
+from django.shortcuts import reverse
 
 
 class Post(models.Model):
@@ -20,8 +21,15 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(f'{self.author.username}/{self.title}')
         return super().save(*args, **kwargs)
 
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return '%s - %s' % (self.post.title, self.name)
