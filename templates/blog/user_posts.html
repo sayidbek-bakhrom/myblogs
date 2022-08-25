@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>My Posts</h2>
+    <br><br>
+    {% if user.is_authenticated %}
+    {% for post in posts %}
+        <p><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a></p>
+    {% empty %}
+        <p>You have no posts yet. <a href="{% url 'post-create' %}">Tap here to create one!</a></p>
+    {% endfor %}
+    {% else %}
+        <a href="{% url 'login-user' %}">Login</a> to view all of your posts!
+    {% endif %}
+{% endblock %}
