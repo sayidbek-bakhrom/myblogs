@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 
+
 def home(request):
     p = Paginator(Post.objects.all(), 10)
     page = request.GET.get('page')
