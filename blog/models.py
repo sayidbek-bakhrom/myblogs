@@ -21,7 +21,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f'{self.author.username}/{self.title}')
+            self.slug = slugify(f'{self.author.username}-{self.title}')
         return super().save(*args, **kwargs)
 
 
