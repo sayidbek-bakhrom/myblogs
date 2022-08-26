@@ -3,7 +3,10 @@
 {% block content %}
     <h2>All posts</h2>
     <br><br>
+
     {% for post in posts %}
+        {% if not post.deleted %}
         <p><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a> by {{ post.author.username }}</p>
+    {% endif %}
     {% endfor %}
 {% endblock %}
