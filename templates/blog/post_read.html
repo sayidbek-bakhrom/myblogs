@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+        {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+                <p>{{ msg }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% if post.deleted %}
         <h2>Posts have been deleted by admins!</h2>
     {% else %}
@@ -34,19 +42,19 @@
 
         </p>
         <hr>
-{#           <h3>Comments</h3>#}
-{#            <div class="card-footer">#}
-{#    {% for comment in post.comments.all %}#}
-{#          <ul class="list-group">#}
-{#                <li class="list-group-item list-group-item-light">#}
-{#                    {{ comment.date_added|timesince }} ago<br>#}
-{#          <img src="{{ comment.author.profile.image.url }}" alt="" width="30px">#}
-{#                    <b>{{ comment.author }}: </b> {{ comment }}#}
-{##}
-{#                </li>#}
-{#        </ul>#}
-{#    {% endfor %}#}
-{#    </div>#}
+           <h3>Comments</h3>
+        <a href="{% url 'add-comment' post.pk %}">Add comment</a>
+            <div class="card-footer">
+    {% for comment in post.comments.all %}
+          <ul class="list-group">
+                <li class="list-group-item list-group-item-light">
+                    {{ comment.date_added|timesince }} ago<br>
+                    <b>{{ comment.name }}: </b> {{ comment }}
+
+                </li>
+        </ul>
+    {% endfor %}
+    </div>
         <br>
         <br>
 

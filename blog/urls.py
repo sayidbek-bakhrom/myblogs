@@ -12,4 +12,5 @@ urlpatterns = [
     path('search-post/', views.search_post, name='search-post'),
     path('admin-page/', views.admin_page, name='admin-page'),
     path('user-posts/', views.user_posts, name='user-posts'),
+    path('add-comment/<pk>/', views.add_comment, name='add-comment'),
 ]

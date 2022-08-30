@@ -1,3 +1,4 @@
+import os
 import django_heroku
 import dj_database_url
 import whitenoise.storage
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-v)tfp1qq_tazfh@dy+qmhc0+)=&s_z69pl6hn&mnt4#rk!jg9^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # so so so
-ALLOWED_HOSTS = ['https://myblogs2022.herokuapp.com/']
+ALLOWED_HOSTS = ['murmuring-dusk-72304.herokuapp.com/']
 
 
 # Application definition

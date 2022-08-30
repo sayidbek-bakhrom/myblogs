@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, User
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -129,11 +129,13 @@ def user_posts(request):
         return render(request, 'blog/user_posts.html')
 
 
-# def add_comment(request, pk):
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#     else:
-#         form = CommentForm()
-#     return render(request, 'blog/add_comments.html', {'form': form})
+def add_comment(request, pk):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added your comment!')
+            return redirect('home')
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comments.html', {'form': form})

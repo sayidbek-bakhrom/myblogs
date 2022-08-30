@@ -9,7 +9,7 @@ random_avatar = random.choice(avatars)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField('Profile Image', upload_to='', default=f'{random_avatar}.png')
+    image = models.ImageField('Profile Image', upload_to='avatars/', default=f'{random_avatar}.png')
 
     def __str__(self):
         return f'{self.user.username} profile'
